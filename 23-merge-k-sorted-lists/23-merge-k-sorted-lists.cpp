@@ -11,40 +11,48 @@
 class Solution {
 public:
     
-    class compare{
-        public: 
-        bool operator()(ListNode *a, ListNode *b){
-            return a->val > b->val;
+    ListNode* merge(ListNode *a, ListNode *b){
+        if(a==nullptr) return b;
+        else if(b==nullptr) return a;
+        
+        ListNode *head=nullptr, *tail=nullptr;
+        if(a->val > b->val){
+            head=b;
+            b=b->next;
         }
-    };
+        else{
+            head=a;
+            a=a->next;
+        }
+        
+        tail=head;
+        while(a and b){
+                if(a->val > b->val){
+                tail->next=b;
+                tail=b;
+                b=b->next;
+
+            }
+            else{
+                tail->next=a;
+                tail=a;
+                a=a->next;
+            }
+        }
+        
+        if(a!=nullptr) tail->next=a;
+        else if(b!=nullptr) tail->next=b;
+        
+        return head;
+    }
     
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         if(lists.size()<1) return nullptr;
         if(lists.size()==1) return lists[0];
         
-        priority_queue<ListNode*, vector<ListNode*>, compare> pq;
-        ListNode *head=nullptr, *tail=nullptr;
-        
-        int n=lists.size();
-        for(auto x: lists){
-            
-            if(x!=NULL)
-            pq.push(x);
-        }
-        if(!pq.empty())
-        {
-            head=pq.top();
-        pq.pop();
-        
-        tail=head;
-        if(tail->next) pq.push(tail->next);
-        }
-        
-        while(!pq.empty()){
-            tail->next=pq.top();
-            pq.pop();
-            tail=tail->next;
-            if(tail->next) pq.push(tail->next);
+        ListNode *head=merge(lists[0], lists[1]);
+        for(int i=2; i<lists.size(); i++){
+            head=merge(head, lists[i]);
         }
         
         return head;
