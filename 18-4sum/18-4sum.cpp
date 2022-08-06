@@ -9,11 +9,11 @@ public:
         for(int i=0; i<n-3; i++)
         {
             if(i>0 and nums[i]==nums[i-1]) continue;
-            // if(nums[i]+nums[i+1]+nums[i+2]+nums[i+3]>target) break;
+            if(1ll*nums[i]+nums[i+1]+nums[i+2]+nums[i+3]>target*1ll) break;
             for(int j=i+1; j<n-2; j++)
             {
                 if(j>i+1 and nums[j]==nums[j-1]) continue;
-                // if(nums[i]+nums[j]+nums[j+1]+nums[j+2]>target) break;
+                if(1ll*nums[i]+nums[j]+nums[j+1]+nums[j+2]>target*1ll) break;
                 int l=j+1, r=n-1;
                 while(l<r)
                 {
