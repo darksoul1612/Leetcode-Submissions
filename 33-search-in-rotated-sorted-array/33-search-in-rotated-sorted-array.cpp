@@ -5,13 +5,10 @@ public:
         int l=0, h=n-1;
         
         while(l<=h){
-            if(nums[l]==target) return l;
-            if(nums[h]==target) return h;
-            
             int mid=l+(h-l)/2;
 
             if(nums[mid]==target) return mid;
-            else if(nums[l]<nums[mid]){ // if left half sorted
+            else if(nums[l]<=nums[mid]){ // if left half sorted
                 if(target >= nums[l] and target < nums[mid]) h=mid-1;
                 else l=mid+1;
             }
